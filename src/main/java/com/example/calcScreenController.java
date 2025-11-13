@@ -1,6 +1,5 @@
 package com.example;
 
-import com.example.Course;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +17,19 @@ public class calcScreenController {
     private ComboBox<String> comboGrade;
     private List<Course> courses = new ArrayList<>();
 
+    @FXML
+    public void initialize() {
+        comboGrade.getItems().addAll("A+", "A", "A-", "B+", "B", "C", "F");
+        comboGrade.setValue("A+"); // default
+        txtCredit.setTextFormatter(new TextFormatter<>(change -> {
+            String newText = change.getControlNewText();
+            if (newText.matches("\\d*(\\.\\d*)?")) { // regex: digits with optional decimal
+                return change; // accept change
+            } else {
+                return null; // reject change
+            }
+        }));
+    }
 
     @FXML
     private void switchToHomeScreen() throws IOException {
