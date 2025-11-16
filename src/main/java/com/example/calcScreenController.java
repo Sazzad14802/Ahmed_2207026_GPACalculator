@@ -1,26 +1,44 @@
 package com.example;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class calcScreenController {
     @FXML
     private TextField txtTitle, txtCode, txtTeacher1, txtTeacher2, txtCredit;
     @FXML
     private ComboBox<String> comboGrade;
-    private List<Course> courses = new ArrayList<>();
+    private ObservableList<Course> courses = FXCollections.observableArrayList();
+    @FXML
+    private TableView<Course> tableCourses;
+    @FXML
+    private TableColumn<Course, String> colTitle;
+    @FXML
+    private TableColumn<Course, Double> colCredit;
+    @FXML
+    private TableColumn<Course, String> colGrade;
 
     @FXML
     public void initialize() {
+
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colCredit.setCellValueFactory(new PropertyValueFactory<>("credit"));
+        colGrade.setCellValueFactory(new PropertyValueFactory<>("grade"));
+        tableCourses.setItems(courses);
+
         comboGrade.getItems().addAll("A+", "A", "A-", "B+", "B", "C", "F");
         comboGrade.setValue("A+"); // default
+        
         txtCredit.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             if (newText.matches("\\d*(\\.\\d*)?")) { // regex: digits with optional decimal
@@ -46,6 +64,15 @@ public class calcScreenController {
                 Double.parseDouble(txtCredit.getText()),
                 comboGrade.getValue());
         courses.add(c);
+
+        new Alert(Alert.AlertType.INFORMATION, "Course added!").showAndWait();
+
+        txtTitle.clear();
+        txtCode.clear();
+        txtTeacher1.clear();
+        txtTeacher2.clear();
+        txtCredit.clear();
+        comboGrade.setValue("A+");
     }
 
     private static final Map<String, Double> gradeToPoint = Map.of(

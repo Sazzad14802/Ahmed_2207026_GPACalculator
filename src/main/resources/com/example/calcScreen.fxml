@@ -5,6 +5,8 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -16,7 +18,11 @@
 
 <BorderPane prefHeight="578.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.calcScreenController">
    <bottom>
-        <Button fx:id="secondaryButton" onAction="#switchToHomeScreen" text="Switch to Home" BorderPane.alignment="CENTER" />
+        <Button fx:id="secondaryButton" onAction="#switchToHomeScreen" text="Switch to Home" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
+      </Button>
    </bottom>
    <top>
       <Label text="GPA Calculator" BorderPane.alignment="CENTER">
@@ -119,6 +125,13 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </ButtonBar>
+            <TableView fx:id="tableCourses" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="colTitle" prefWidth="155.99994504451752" text="Course Title" />
+                <TableColumn fx:id="colCredit" prefWidth="101.60003662109375" text="Course Credit" />
+                  <TableColumn fx:id="colGrade" prefWidth="55.20001220703125" text="Grade" />
+              </columns>
+            </TableView>
          </children>
       </VBox>
    </center>
