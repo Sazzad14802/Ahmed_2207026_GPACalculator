@@ -1,10 +1,14 @@
 package com.example;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -12,6 +16,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 public class calcScreenController {
     @FXML
@@ -38,7 +43,7 @@ public class calcScreenController {
 
         comboGrade.getItems().addAll("A+", "A", "A-", "B+", "B", "C", "F");
         comboGrade.setValue("A+"); // default
-        
+
         txtCredit.setTextFormatter(new TextFormatter<>(change -> {
             String newText = change.getControlNewText();
             if (newText.matches("\\d*(\\.\\d*)?")) { // regex: digits with optional decimal
@@ -88,7 +93,7 @@ public class calcScreenController {
             "F", 0.0);
 
     @FXML
-    private void calcGPA() {
+    private void calcGPA() throws IOException {
         double totalPoints = 0;
         double totalCredits = 0;
 
@@ -100,6 +105,18 @@ public class calcScreenController {
 
         double gpa = totalPoints / totalCredits;
         System.out.println("GPA: " + gpa);
+
+        
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("gpaReport.fxml"));
+        Parent root = loader.load();
+
+        reportController controller = loader.getController();
+        controller.setData(courses, gpa);
+
+        Stage stage2 = new Stage();
+        stage2.setTitle("GPA Report");
+        stage2.setScene(new Scene(root));
+        stage2.show();
 
     }
 }
