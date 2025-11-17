@@ -1,7 +1,6 @@
 package com.example;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -52,6 +51,16 @@ public class calcScreenController {
                 return null; // reject change
             }
         }));
+
+        tableCourses.setOnKeyPressed(e -> {
+            if (e.getCode().toString().equals("DELETE")) {
+                Course selected = tableCourses.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    tableCourses.getItems().remove(selected);
+                    new Alert(Alert.AlertType.INFORMATION, "Course removed!").showAndWait();
+                }
+            }
+        });
     }
 
     @FXML
@@ -106,7 +115,6 @@ public class calcScreenController {
         double gpa = totalPoints / totalCredits;
         System.out.println("GPA: " + gpa);
 
-        
         FXMLLoader loader = new FXMLLoader(getClass().getResource("gpaReport.fxml"));
         Parent root = loader.load();
 

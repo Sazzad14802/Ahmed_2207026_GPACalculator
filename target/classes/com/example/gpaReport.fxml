@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reportController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #03cafc;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.reportController">
    <top>
       <Label alignment="CENTER" text="GPA REPORT" BorderPane.alignment="CENTER">
          <font>
@@ -20,7 +19,7 @@
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="gpaLabel" text="GPA:">
+            <Label fx:id="gpaLabel" style="-fx-background-color: #03fc62; -fx-background-radius: 8;" text="GPA:">
                <font>
                   <Font size="18.0" />
                </font>

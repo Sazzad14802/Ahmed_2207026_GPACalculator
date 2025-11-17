@@ -119,7 +119,7 @@
             </GridPane>
             <ButtonBar prefHeight="40.0" prefWidth="200.0">
               <buttons>
-                <Button mnemonicParsing="false" onAction="#calcGPA" prefHeight="35.0" prefWidth="90.0" text="Calculate GPA" />
+                <Button mnemonicParsing="false" onAction="#calcGPA" prefHeight="35.0" prefWidth="90.0" style="-fx-background-color: #03fc94;" text="Calculate GPA" />
               </buttons>
                <VBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
