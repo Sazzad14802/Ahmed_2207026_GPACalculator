@@ -15,6 +15,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class calcScreenController {
@@ -123,6 +124,7 @@ public class calcScreenController {
 
         Stage stage2 = new Stage();
         stage2.setTitle("GPA Report");
+        stage2.getIcons().add(new Image(getClass().getResourceAsStream("/images/logo.png")));
         stage2.setScene(new Scene(root));
         stage2.show();
 
