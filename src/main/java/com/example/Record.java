@@ -1,27 +1,17 @@
 package com.example;
 
 public class Record {
-        private String roll;
-        private double gpa;
+    private int id;
+    private String roll;
+    private double gpa;
 
-        public Record(String roll, double gpa) {
-            this.roll = roll;
-            this.gpa = gpa;
-        }
-
-        public String getRoll() {
-            return roll;
-        }
-
-        public void setRoll(String roll) {
-            this.roll = roll;
-        }
-
-        public double getGpa() {
-            return gpa;
-        }
-
-        public void setGpa(double gpa) {
-            this.gpa = gpa;
-        }
+    public Record(int id, String roll, double gpa) {
+        this.id = id;
+        this.roll = roll;
+        this.gpa = gpa;
     }
+
+    public int getId() { return id; }
+    public String getRoll() { return roll; }
+    public double getGpa() { return gpa; }
+}

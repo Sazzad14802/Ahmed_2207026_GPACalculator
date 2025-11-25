@@ -20,6 +20,7 @@ A formatted report window can also be generated.
 - Report Window displaying:
   - Full Course List
   - GPA Summary
+- History 
 - Clean JavaFX UI (FXML-based)
 
 ---
@@ -30,7 +31,7 @@ A formatted report window can also be generated.
 - JavaFX 17+  
 - Maven  
 - Scene Builder
-
+- SQLite
 ---
 
 

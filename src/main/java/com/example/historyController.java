@@ -24,6 +24,16 @@ public class historyController {
         colRoll.setCellValueFactory(new PropertyValueFactory<>("roll"));
         colGpa.setCellValueFactory(new PropertyValueFactory<>("gpa"));
         loadData();
+
+        tableHistory.setOnKeyPressed(e -> {
+            if (e.getCode().toString().equals("DELETE")) {
+                Record selected = tableHistory.getSelectionModel().getSelectedItem();
+                if (selected != null) {
+                    ReportDAO.deleteReport(selected.getId());
+                    tableHistory.getItems().remove(selected);
+                }
+            }
+        });
     }
 
     private void loadData() {

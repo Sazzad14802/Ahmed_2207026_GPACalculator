@@ -43,9 +43,10 @@ public class ReportDAO {
                 ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) {
+                int id = rs.getInt("id");
                 String roll = rs.getString("roll");
                 double gpa = rs.getDouble("gpa");
-                records.add(new Record(roll, gpa));
+                records.add(new Record(id, roll, gpa));
             }
 
         } catch (SQLException e) {
@@ -68,7 +69,7 @@ public class ReportDAO {
         }
     }
 
-    public void deleteReport(int id) {
+    public static void deleteReport(int id) {
         String sql = "DELETE FROM reports WHERE id = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 PreparedStatement pst = conn.prepareStatement(sql)) {
