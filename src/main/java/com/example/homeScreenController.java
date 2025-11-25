@@ -9,4 +9,8 @@ public class homeScreenController {
     private void switchToCalcScreen() throws IOException {
         App.setRoot("calcScreen");
     }
+    @FXML
+    private void switchToHistoryScreen() throws IOException {
+        App.setRoot("historyScreen");
+    }
 }

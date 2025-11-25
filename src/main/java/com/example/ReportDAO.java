@@ -2,6 +2,9 @@ package com.example;
 
 import java.sql.*;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class ReportDAO {
 
     private static final String DB_URL = "jdbc:sqlite:gpa_reports.db";
@@ -11,7 +14,7 @@ public class ReportDAO {
                 Statement st = conn.createStatement()) {
             String sql = "CREATE TABLE IF NOT EXISTS reports (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "roll_number TEXT NOT NULL," +
+                    "roll TEXT NOT NULL," +
                     "gpa REAL NOT NULL)";
             st.execute(sql);
         } catch (SQLException e) {
@@ -20,7 +23,7 @@ public class ReportDAO {
     }
 
     public void insertReport(String rollNumber, double gpa) {
-        String sql = "INSERT INTO reports (roll_number, gpa) VALUES (?, ?)";
+        String sql = "INSERT INTO reports (roll, gpa) VALUES (?, ?)";
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, rollNumber);
@@ -31,25 +34,28 @@ public class ReportDAO {
         }
     }
 
-    public void fetchReports() {
+    public static ObservableList<Record> fetchReports() {
+        ObservableList<Record> records = FXCollections.observableArrayList();
         String sql = "SELECT * FROM reports";
+
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 Statement st = conn.createStatement();
                 ResultSet rs = st.executeQuery(sql)) {
 
             while (rs.next()) {
-                System.out.println("ID: " + rs.getInt("id") +
-                        ", Roll: " + rs.getString("roll_number") +
-                        ", GPA: " + rs.getDouble("gpa"));
+                String roll = rs.getString("roll");
+                double gpa = rs.getDouble("gpa");
+                records.add(new Record(roll, gpa));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return records;
     }
 
     public void updateReport(int id, String newRollNumber, double newGpa) {
-        String sql = "UPDATE reports SET roll_number = ?, gpa = ? WHERE id = ?";
+        String sql = "UPDATE reports SET roll = ?, gpa = ? WHERE id = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 PreparedStatement pst = conn.prepareStatement(sql)) {
             pst.setString(1, newRollNumber);
