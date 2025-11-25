@@ -14,11 +14,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class calcScreenController {
+
+    private ReportDAO reportDAO = new ReportDAO();
+
     @FXML
     private TextField txtTitle, txtCode, txtTeacher1, txtTeacher2, txtCredit;
     @FXML
@@ -104,17 +108,37 @@ public class calcScreenController {
 
     @FXML
     private void calcGPA() throws IOException {
+
+        if (courses.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "No courses added!").showAndWait();
+            return;
+        }
+        // Ask for roll
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Enter Roll");
+        dialog.setHeaderText("Please enter your Roll:");
+        dialog.setContentText("Roll:");
+        dialog.getEditor().setTextFormatter(new TextFormatter<>(change -> {
+            if (change.getText().matches("\\d*")) { // allow only digits
+                return change;
+            }
+            return null; // reject non-digits
+        }));
+        String roll = dialog.showAndWait().orElse("");
+        if (roll.isBlank()) {
+            new Alert(Alert.AlertType.WARNING, "Roll is required!").showAndWait();
+            return;
+        }
+        // Calc GPA
         double totalPoints = 0;
         double totalCredits = 0;
-
         for (Course c : courses) {
             double points = gradeToPoint.getOrDefault(c.getGrade(), 0.0);
             totalPoints += points * c.getCredit();
             totalCredits += c.getCredit();
         }
-
         double gpa = totalPoints / totalCredits;
-        System.out.println("GPA: " + gpa);
+        reportDAO.insertReport(roll, gpa);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("gpaReport.fxml"));
         Parent root = loader.load();
