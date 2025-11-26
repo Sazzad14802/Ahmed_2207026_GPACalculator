@@ -14,4 +14,7 @@ public class Record {
     public int getId() { return id; }
     public String getRoll() { return roll; }
     public double getGpa() { return gpa; }
+
+    public void setRoll(String roll) { this.roll = roll; }
+    public void setGpa(double gpa) { this.gpa = gpa; }
 }

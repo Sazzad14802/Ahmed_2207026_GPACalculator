@@ -132,6 +132,7 @@
                   <TableColumn fx:id="colGrade" prefWidth="55.20001220703125" text="Grade" />
               </columns>
             </TableView>
+            <Label text="To delete a course, select and press delete" />
          </children>
       </VBox>
    </center>

@@ -6,8 +6,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.historyController">
    <top>
@@ -18,12 +18,18 @@
       </Label>
    </top>
    <center>
-      <TableView fx:id="tableHistory" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-        <columns>
-          <TableColumn fx:id="colRoll" prefWidth="117.60003662109375" text="Roll" />
-          <TableColumn fx:id="colGpa" prefWidth="99.20001220703125" text="GPA" />
-        </columns>
-      </TableView>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableHistory" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="colRoll" prefWidth="117.60003662109375" text="Roll" />
+                <TableColumn fx:id="colGpa" prefWidth="99.20001220703125" text="GPA" />
+              </columns>
+            </TableView>
+            <Label text="To delete a history, select and press delete" />
+            <Label text="Double click to edit GPA" />
+         </children>
+      </VBox>
    </center>
    <bottom>
       <Button mnemonicParsing="false" onAction="#switchToHomeScreen" text="Home" BorderPane.alignment="CENTER">

@@ -55,7 +55,7 @@ public class ReportDAO {
         return records;
     }
 
-    public void updateReport(int id, String newRollNumber, double newGpa) {
+    public static void updateReport(int id, String newRollNumber, double newGpa) {
         String sql = "UPDATE reports SET roll = ?, gpa = ? WHERE id = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL);
                 PreparedStatement pst = conn.prepareStatement(sql)) {
