@@ -1,7 +1,13 @@
 package com.example;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputDialog;
@@ -24,7 +30,7 @@ public class historyController {
     public void initialize() {
         colRoll.setCellValueFactory(new PropertyValueFactory<>("roll"));
         colGpa.setCellValueFactory(new PropertyValueFactory<>("gpa"));
-        tableHistory.setItems(ReportDAO.fetchReports());
+        loadData();
 
         tableHistory.setOnKeyPressed(e -> {
             if (e.getCode().toString().equals("DELETE")) {
@@ -48,7 +54,7 @@ public class historyController {
     private void editRecord(Record rec) {
         TextInputDialog gpaDialog = new TextInputDialog(String.valueOf(rec.getGpa()));
         gpaDialog.setTitle("Edit GPA");
-        gpaDialog.setHeaderText("Enter new GPA of roll "+rec.getRoll()+" :");
+        gpaDialog.setHeaderText("Enter new GPA of roll " + rec.getRoll() + " :");
         String newGpaStr = gpaDialog.showAndWait().orElse(null);
         if (newGpaStr == null)
             return;
@@ -57,5 +63,26 @@ public class historyController {
         ReportDAO.updateReport(rec.getId(), rec.getRoll(), newGpa);
         rec.setGpa(newGpa);
         tableHistory.refresh();
+    }
+
+    private void loadData() {
+        Task<ObservableList<Record>> task = new Task<>() {
+            @Override
+            protected ObservableList<Record> call() {
+                return ReportDAO.fetchReports();
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            tableHistory.setItems(task.getValue());
+        });
+
+        task.setOnFailed(e -> {
+            new Alert(Alert.AlertType.ERROR, "Failed to load data!").showAndWait();
+        });
+
+        ExecutorService exec = Executors.newSingleThreadExecutor();
+        exec.execute(task);
+        exec.shutdown();
     }
 }

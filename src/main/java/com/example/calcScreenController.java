@@ -138,6 +138,7 @@ public class calcScreenController {
             totalCredits += c.getCredit();
         }
         double gpa = totalPoints / totalCredits;
+        gpa = Math.round(gpa * 100.0) / 100.0;
         reportDAO.insertReport(roll, gpa);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("gpaReport.fxml"));
